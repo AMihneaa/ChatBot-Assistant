@@ -1,14 +1,15 @@
 
 from pathlib import Path
 from langchain_openai import ChatOpenAI
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 
 LM_BASE_URL = "http://127.0.0.1:1234/v1"
 LM_API_KEY  = "lm-studio"
-MODEL_NAME  = "jan-v1-4b"
+# MODEL_NAME  = "jan-v1-4b"
+MODEL_NAME = "qwen/qwen3-vl-4b"
 
 DOCS_DIR  = "./docs"
 INDEX_DIR = "./faiss_index"
@@ -44,14 +45,31 @@ vs = build_or_load_index()
 
 def answer_question(query: str) -> str:
     docs = vs.similarity_search(query, k=4)
-    context = "\n\n".join([f"[{i+1}] {d.page_content}" for i, d in enumerate(docs)])
 
-    system = ("Ești un asistent care răspunde concis pe baza contextului. "
-              "Dacă informația nu e în context, spune clar ce lipsește și evită halucinațiile.")
-    user = (f"Întrebare: {query}\n\nContext (fragmente):\n{context}\n\n"
-            "Instrucțiuni: Citează fragmentele relevante (ex. [1], [2]...) și răspunde în română.")
+    context = "\n\n".join(
+        [f"[{i+1}] {d.page_content}" for i, d in enumerate(docs)]
+    )
 
-    res = llm.invoke([{"role":"system","content":system},{"role":"user","content":user}])
+    system = (
+        "Ești un asistent care răspunde concis pe baza contextului furnizat.\n"
+        "- Folosește DOAR informațiile din context pentru răspuns.\n"
+        "- Dacă informația nu e în context, spune clar că nu este prezentă și evită halucinațiile.\n"
+        "- Citează fragmentele relevante folosind indexul lor (ex. [1], [2], ...)."
+    )
+
+    user = (
+        f"Întrebare: {query}\n\n"
+        f"Context (fragmente):\n{context}\n\n"
+        "Instrucțiuni: Citează fragmentele relevante (ex. [1], [2]...) și răspunde în română."
+    )
+
+    res = llm.invoke([
+        {"role": "system", "content": system},
+        {"role": "user", "content": f"{user} /no_think"},
+    ])
+
+    print("\n[----- DEBUG] Primul chunk:\n", docs[0].page_content[:500], " [Debug -----]\n")
+
     return res.content
 
 
