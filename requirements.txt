@@ -1,2 +1,31 @@
 dotenv
 httpx
+asyncio
+
+
+# --- LangChain + LangGraph core ---
+langchain>=0.3.0
+langgraph>=0.2.0
+
+# --- LangChain community integrations (loaders, vector stores, etc.) ---
+langchain-community>=0.3.0
+
+# --- OpenAI-compatible client (pentru LM Studio endpoint local) ---
+langchain-openai>=0.2.0
+
+# --- Vector store (pentru RAG local) ---
+faiss-cpu>=1.8.0
+
+# --- Embeddings locale (HuggingFace) ---
+sentence-transformers==2.7.0
+
+# --- Text splitters + parsere ---
+beautifulsoup4>=4.12.0
+
+# --- (opțional) pentru debug/tracing LangSmith ---
+langsmith>=0.1.93
+
+# --- (opțional) pentru compatibilitate completă Pydantic ---
+pydantic>=2.7.0
+
+fastapi
