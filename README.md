@@ -53,7 +53,7 @@ Managed internally using a LangGraph state machine.
 ---
 
 ## 🏗 Project Structure
-
+```bash
 app/
 ├─ api/
 │ ├─ routes.py # /chat endpoint
@@ -72,7 +72,7 @@ faiss_index/ # auto-generated FAISS index
 frontend_knowledge_base.md
 .env
 
-
+```
 
 ---
 
