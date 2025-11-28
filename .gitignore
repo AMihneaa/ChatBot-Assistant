@@ -3,3 +3,6 @@
 /faiss_indexs/*
 
 *.md 
+
+__pycache__/
+*.pyc
