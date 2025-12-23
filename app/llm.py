@@ -9,7 +9,7 @@ settings = get_settings()
 os.environ.setdefault("USER_AGENT", settings.user_agent)
 
 llm = ChatOpenAI(
-    model= settings.model_namem,
+    model= settings.model_name,
     base_url= settings.lm_base_url,
     api_key= settings.lm_api_key,
     temperature= 0.2,
