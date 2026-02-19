@@ -1,10 +1,9 @@
-# 🧠 Ticket Assistant — AI Support Agent for a Transport Booking App
+# Ticket Assistant — AI Support Agent for a Transport Booking App
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)]()
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110-brightgreen.svg)]()
 [![LangChain](https://img.shields.io/badge/LangChain-LangGraph-orange.svg)]()
 [![LM Studio](https://img.shields.io/badge/LLM-LM%20Studio-purple.svg)]()
-[![Spring](https://img.shields.io/badge/Backend-Spring%20Boot-lightgreen.svg)]()
 
 ---
 
