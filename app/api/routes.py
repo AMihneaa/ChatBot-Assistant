@@ -9,7 +9,7 @@ router = APIRouter()
 @router.post("/chat", response_model=ChatResponse)
 def chat(req: ChatRequest) -> ChatResponse:
     """
-    Endpoint-ul pe care îl va chema clientul web.
+    Endpoint for Client.
     """
     reply, session_id = run_turn(req.message, req.session_id)
     return ChatResponse(reply=reply, session_id=session_id)

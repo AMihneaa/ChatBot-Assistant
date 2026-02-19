@@ -11,13 +11,13 @@ settings = get_settings()
 
 def build_or_load_index() -> FAISS:
     """
-    Construiește sau încarcă indexul FAISS pe baza fișierului
-    `frontend_knowledge_base.md` generat din codul de frontend.
+    Build or load the FAISS index based on `frontend_knowledge_base.md`
+    generated from the frontend source code.
     """
     index_path: Path = settings.index_dir
 
     if index_path.exists():
-        print(f"[RAG] Încarc indexul FAISS din {index_path}")
+        print(f"[RAG] Incarc indexul FAISS din {index_path}")
         return FAISS.load_local(
             folder_path=str(index_path),
             embeddings=embeddings,
@@ -27,9 +27,7 @@ def build_or_load_index() -> FAISS:
     md_path: Path = settings.md_knowledge_base
     if not md_path.exists():
         raise FileNotFoundError(
-            "[RAG] Nu am găsit `frontend_knowledge_base.md` în directorul curent.\n"
-            "Asigură-te că ai rulat scriptul `export_src_to_md.py` în proiectul de client\n"
-            "și ai copiat fișierul .md aici lângă acest server (sau pornești serverul din același folder)."
+            "[RAG] Nu am gasit `frontend_knowledge_base.md` in directorul curent.\n"
         )
 
     print(f"[RAG] Construiesc index FAISS din {md_path} ...")
@@ -43,12 +41,12 @@ def build_or_load_index() -> FAISS:
     )
     chunks = splitter.split_documents(docs)
 
-    print(f"[RAG] Am împărțit front-end-ul în {len(chunks)} chunk-uri.")
+    print(f"[RAG] Am impartit front-end-ul in {len(chunks)} chunk-uri.")
 
     vs_ = FAISS.from_documents(chunks, embeddings)
     vs_.save_local(str(index_path))
 
-    print(f"[RAG] Am salvat indexul FAISS în {index_path}")
+    print(f"[RAG] Am salvat indexul FAISS in {index_path}")
     return vs_
 
 
